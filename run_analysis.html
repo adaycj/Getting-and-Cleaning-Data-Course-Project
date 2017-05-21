@@ -118,7 +118,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">run_analysis.R</h1>
 <h4 class="author"><em>servi_000</em></h4>
-<h4 class="date"><em>Sun May 21 17:04:28 2017</em></h4>
+<h4 class="date"><em>Sun May 21 18:14:50 2017</em></h4>
 
 </div>
 
@@ -142,7 +142,7 @@ run_analysis &lt;- function(){
     packages(plyr)
     library(plyr)
     ## set the working directory for the needed files
-    setwd(&quot;D:/Data Science/Week 4&quot;)
+    ##setwd(D:\Data Science\Week 4\Getting-and-Cleaning-Data-Course-Project)
     
     ##Step 1: Merge the training and the test sets to create one data set.
     combined_data &lt;- merge_ds(combined_data)
@@ -241,30 +241,30 @@ appropriate_labels &lt;- function(combined_data){
     #4. Appropriately label the data set with descriptive variable names.
     
     ## get rid of parentheses
-    col_headers(combined_data) &lt;- gsub(&quot;\\(|\\)&quot;, &quot;&quot;, col_headers(combined_data), perl  = TRUE)
+    names(combined_data) &lt;- gsub(&quot;\\(|\\)&quot;, &quot;&quot;, names(combined_data), perl  = TRUE)
     
     ##A syntactically valid name consists of letters, 
     ##numbers and the dot or underline characters and starts with a letter or 
     ##the dot not followed by a number.
-    col_headers(combined_data) &lt;- make.col_headers(col_headers(combined_data))
+    names(combined_data) &lt;- make.names(names(combined_data))
     
-    ##Fix abbreviated col_headers
+    ##Fix abbreviated names
     ##change Mag for Magnitude
-    col_headers(combined_data) &lt;- gsub(&quot;Mag&quot;, &quot;Magnitude&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;Mag&quot;, &quot;Magnitude&quot;, names(combined_data))
     ##change ^t for Magnitude
-    col_headers(combined_data) &lt;- gsub(&quot;^t&quot;, &quot;Time&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;^t&quot;, &quot;Time&quot;, names(combined_data))
     ##change Freq for Time
-    col_headers(combined_data) &lt;- gsub(&quot;Freq&quot;, &quot;Frequency&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;Freq&quot;, &quot;Frequency&quot;, names(combined_data))
     ##change Acc for Frequency
-    col_headers(combined_data) &lt;- gsub(&quot;Acc&quot;, &quot;Acceleration&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;Acc&quot;, &quot;Acceleration&quot;, names(combined_data))
     ##change BodyBody for Acceleration
-    col_headers(combined_data) &lt;- gsub(&quot;BodyBody&quot;, &quot;Body&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;BodyBody&quot;, &quot;Body&quot;, names(combined_data))
     ##change mean for Body
-    col_headers(combined_data) &lt;- gsub(&quot;mean&quot;, &quot;Mean&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;mean&quot;, &quot;Mean&quot;, names(combined_data))
     ##change ^f for Mean
-    col_headers(combined_data) &lt;- gsub(&quot;^f&quot;, &quot;Frequency&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;^f&quot;, &quot;Frequency&quot;, names(combined_data))
     ##change std for Frequency
-    col_headers(combined_data) &lt;- gsub(&quot;std&quot;, &quot;Standard&quot;, col_headers(combined_data))
+    names(combined_data) &lt;- gsub(&quot;std&quot;, &quot;Standard&quot;, names(combined_data))
     return(combined_data)
 }
 
@@ -275,6 +275,8 @@ independent_tidy_data &lt;- function(combined_data){
     new_tidy_data &lt;- ddply(combined_data, c(&quot;subjectID&quot;,&quot;activityType&quot;), numcolwise(mean))
 
     write.csv(new_tidy_data, file=&quot;tidy_data.csv&quot;, row.names = FALSE)
+    ##output format also required for assigement sumission
+    write.table(new_tidy_data, file=&quot;tidy_data.txt&quot;, row.name=FALSE)
 }
 
 packages&lt;-function(x){

@@ -17,7 +17,7 @@ run_analysis <- function(){
     packages(plyr)
     library(plyr)
     ## set the working directory for the needed files
-    setwd("D:/Data Science/Week 4")
+    ##setwd(D:\Data Science\Week 4\Getting-and-Cleaning-Data-Course-Project)
     
     ##Step 1: Merge the training and the test sets to create one data set.
     combined_data <- merge_ds(combined_data)
@@ -116,30 +116,30 @@ appropriate_labels <- function(combined_data){
     #4. Appropriately label the data set with descriptive variable names.
     
     ## get rid of parentheses
-    col_headers(combined_data) <- gsub("\\(|\\)", "", col_headers(combined_data), perl  = TRUE)
+    names(combined_data) <- gsub("\\(|\\)", "", names(combined_data), perl  = TRUE)
     
     ##A syntactically valid name consists of letters, 
     ##numbers and the dot or underline characters and starts with a letter or 
     ##the dot not followed by a number.
-    col_headers(combined_data) <- make.col_headers(col_headers(combined_data))
+    names(combined_data) <- make.names(names(combined_data))
     
-    ##Fix abbreviated col_headers
+    ##Fix abbreviated names
     ##change Mag for Magnitude
-    col_headers(combined_data) <- gsub("Mag", "Magnitude", col_headers(combined_data))
+    names(combined_data) <- gsub("Mag", "Magnitude", names(combined_data))
     ##change ^t for Magnitude
-    col_headers(combined_data) <- gsub("^t", "Time", col_headers(combined_data))
+    names(combined_data) <- gsub("^t", "Time", names(combined_data))
     ##change Freq for Time
-    col_headers(combined_data) <- gsub("Freq", "Frequency", col_headers(combined_data))
+    names(combined_data) <- gsub("Freq", "Frequency", names(combined_data))
     ##change Acc for Frequency
-    col_headers(combined_data) <- gsub("Acc", "Acceleration", col_headers(combined_data))
+    names(combined_data) <- gsub("Acc", "Acceleration", names(combined_data))
     ##change BodyBody for Acceleration
-    col_headers(combined_data) <- gsub("BodyBody", "Body", col_headers(combined_data))
+    names(combined_data) <- gsub("BodyBody", "Body", names(combined_data))
     ##change mean for Body
-    col_headers(combined_data) <- gsub("mean", "Mean", col_headers(combined_data))
+    names(combined_data) <- gsub("mean", "Mean", names(combined_data))
     ##change ^f for Mean
-    col_headers(combined_data) <- gsub("^f", "Frequency", col_headers(combined_data))
+    names(combined_data) <- gsub("^f", "Frequency", names(combined_data))
     ##change std for Frequency
-    col_headers(combined_data) <- gsub("std", "Standard", col_headers(combined_data))
+    names(combined_data) <- gsub("std", "Standard", names(combined_data))
     return(combined_data)
 }
 
@@ -150,6 +150,8 @@ independent_tidy_data <- function(combined_data){
     new_tidy_data <- ddply(combined_data, c("subjectID","activityType"), numcolwise(mean))
 
     write.csv(new_tidy_data, file="tidy_data.csv", row.names = FALSE)
+    ##output format also required for assigement sumission
+    write.table(new_tidy_data, file="tidy_data.txt", row.name=FALSE)
 }
 
 packages<-function(x){
